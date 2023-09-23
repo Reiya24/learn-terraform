@@ -1,10 +1,15 @@
 variable "hcloud_token" {
-  default     = "ubuntu-18.04"
-  description = "input hetzner token"
-  sensitive   = true
+  sensitive = true
+}
+
+variable "server_list" {
+  type = list(string)
+}
+
+variable "firewall_port" {
+  type = list(string)
 }
 
 variable "ssh_key" {
-  description = "input ssh-key"
-  sensitive   = true
+  type = map(string)
 }

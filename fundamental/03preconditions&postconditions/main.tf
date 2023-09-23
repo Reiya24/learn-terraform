@@ -36,7 +36,7 @@ resource "docker_container" "nginx" {
     internal = 80
   }
 
-  network_mode = data.docker_network.default_bridge.name 
+  network_mode = data.docker_network.default_bridge.name
   lifecycle {
     /*
       precondition & postcondition dapat di definisikan lebih dari 1x

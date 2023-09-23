@@ -11,19 +11,45 @@ provider "hcloud" {
   token = var.hcloud_token
 }
 
-resource "hcloud_ssh_key" "terraform_ssh_key" {
-  name       = "terraform-ssh-key"
-  public_key = var.ssh_key
+resource "hcloud_ssh_key" "ssh_keys" {
+  for_each   = var.ssh_key
+  name       = each.key
+  public_key = each.value
 }
 
-resource "hcloud_server" "terraform_server" {
-  name        = "terraform"
+resource "hcloud_firewall" "basic_firewall" {
+  name = "basic_firewall"
+
+  dynamic "rule" {
+    for_each = var.firewall_port
+    content {
+      direction = "in"
+      protocol  = "tcp"
+      port      = rule.value
+      source_ips = [
+        "0.0.0.0/0",
+        "::/0"
+      ]
+    }
+  }
+}
+
+resource "hcloud_network" "dumbways_network" {
+  name     = "dumbways_network"
+  ip_range = "10.0.1.0/24"
+}
+
+resource "hcloud_server" "server" {
+  for_each = toset(var.server_list)
+
+  name        = each.value
   image       = "ubuntu-22.04"
+  location    = "nbg1"
   server_type = "cx11"
-  ssh_keys    = [hcloud_ssh_key.terraform_ssh_key.id]
+  ssh_keys    = keys(hcloud_ssh_key.ssh_keys)
 
   labels = {
     type = "terraform"
   }
 
-}
+# }

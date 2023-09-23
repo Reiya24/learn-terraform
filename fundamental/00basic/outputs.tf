@@ -4,5 +4,6 @@ output "public_ip_gateway" {
 }
 
 /*
+terraform output
 terraform output public_ip_gateway
 */
