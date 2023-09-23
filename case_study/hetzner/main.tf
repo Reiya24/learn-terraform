@@ -52,4 +52,4 @@ resource "hcloud_server" "server" {
     type = "terraform"
   }
 
-# }
+ }
