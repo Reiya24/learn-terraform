@@ -34,9 +34,16 @@ resource "hcloud_firewall" "basic_firewall" {
   }
 }
 
-resource "hcloud_network" "dumbways_network" {
-  name     = "dumbways_network"
-  ip_range = "10.0.1.0/24"
+resource "hcloud_network" "main_network" {
+  name     = "main_network"
+  ip_range = "10.0.1.0/16"
+}
+
+resource "hcloud_network_subnet" "subnet1" {
+  network_id   = hcloud_network.main_network.id
+  type         = "cloud"
+  network_zone = "eu-central"
+  ip_range     = "10.0.1.0/24"
 }
 
 resource "hcloud_server" "server" {
@@ -52,4 +59,11 @@ resource "hcloud_server" "server" {
     type = "terraform"
   }
 
- }
+}
+
+resource "hcloud_server_network" "server" {
+  for_each   = toset(var.server_list)
+  server_id  = hcloud_server.server[each.key].id
+  network_id = hcloud_network.main_network.id
+  ip         = cidrhost(hcloud_network.main_network.ip_range, index(var.server_list, each.key) + 2)
+}
