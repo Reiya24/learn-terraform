@@ -64,5 +64,4 @@ resource "hcloud_server_network" "server" {
   for_each   = toset(var.server_list)
   server_id  = hcloud_server.server[each.key].id
   network_id = hcloud_network.main_network.id
-  ip         = format("10.0.1.%d", index(var.server_list, each.key) + 2)
 }
