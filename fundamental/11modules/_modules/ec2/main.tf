@@ -9,7 +9,7 @@ sudo apt update && sudo apt install nginx -y
 sudo echo "<h1>Hello Kitty</h1>" > /var/www/html/index.html
   EOT
 
-  security_groups = [aws_security_group.sg_nginx.name]
+  security_groups = var.security_group_names
 
   tags = {
     Name = var.list_vm[count.index]

@@ -11,3 +11,7 @@ variable "list_vm" {
   type    = list(string)
   default = ["vm1", "vm2"]
 }
+
+variable "security_group_names" {
+  type = list(string)
+}
