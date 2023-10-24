@@ -36,7 +36,7 @@ resource "hcloud_firewall" "basic_firewall" {
 
 resource "hcloud_network" "main_network" {
   name     = "main_network"
-  ip_range = "10.0.1.0/24"
+  ip_range = "10.0.0.0/16"
 
 }
 
@@ -44,7 +44,7 @@ resource "hcloud_network_subnet" "subnet1" {
   network_id   = hcloud_network.main_network.id
   type         = "cloud"
   network_zone = "eu-central"
-  ip_range     = "10.0.1.0/26"
+  ip_range     = "10.0.1.0/24"
 }
 
 resource "hcloud_server" "server" {
