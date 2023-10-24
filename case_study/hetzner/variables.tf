@@ -1,5 +1,6 @@
 variable "hcloud_token" {
   sensitive = true
+  type = string
 }
 
 variable "server_list" {

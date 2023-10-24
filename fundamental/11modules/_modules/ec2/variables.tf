@@ -1,8 +1,10 @@
 variable "aws_access_key" {
+  sensitive   = true
   type    = string
 }
 
 variable "aws_secret_key" {
+  sensitive   = true
   type    = string
 }
 
@@ -13,5 +15,6 @@ variable "list_vm" {
 }
 
 variable "security_group_names" {
+
   type = list(string)
 }
