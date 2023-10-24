@@ -55,6 +55,7 @@ resource "hcloud_server" "server" {
   location    = "nbg1"
   server_type = "cx11"
   ssh_keys    = keys(hcloud_ssh_key.ssh_keys)
+  firewall_ids = [hcloud_firewall.basic_firewall.id]
 
   labels = {
     type = "terraform"
